@@ -2,6 +2,31 @@ import ctypes
 import sys
 import os
 
+
+#Funzione utilizzata per l'installazione della librerie utilizzate da questo script
+def installer():
+
+    try:
+
+        import PyQt5
+    except ImportError:
+        print("Non tutte le librerie sono installate. Provo a installarle automaticamente...")
+        # Usa l'interprete Python corrente per eseguire pip install cosi che se l'utente ha più interpreti installati, fa in modo che usi quello corrente
+        os.system(f'"{sys.executable}" -m pip install PyQt5') #Prova ad installare la libreria
+        #Riavvia lo script
+        os.execv(sys.executable, ['python'] + sys.argv)
+    except:
+        return False
+
+    return True
+
+
+
+
+
+
+
+
 #Parte principale del codice
 # /////////////////////////////////////////////////////////////////////////////////////////////////////
 def main():
@@ -20,9 +45,18 @@ def main():
      print(f'Cartella "{folder_path}" creata con successo.')
  else:
      print(f'La cartella "{folder_path}" esiste già.')
+#Installazione gui
+ if installer():
+     print("Librerie installate")
+ else:
+     print ("PyQt5 non installato")
 
 
 # /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 def is_admin():
     """Verifica se lo script è eseguito come amministratore"""
